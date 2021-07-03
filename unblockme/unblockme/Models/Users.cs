@@ -11,7 +11,6 @@ namespace unblockme.Models
     {
         public Users()
         {
-            Cars = new HashSet<Cars>();
             Drivers = new HashSet<Drivers>();
             Reviews = new HashSet<Reviews>();
         }
@@ -22,10 +21,9 @@ namespace unblockme.Models
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
         public string PasswordTeapa { get; set; }
-        public double? Rating { get; set; }
-        public int? RatingCount { get; set; }
+        public double Rating { get; set; }
+        public int RatingCount { get; set; }
 
-        public virtual ICollection<Cars> Cars { get; set; }
         public virtual ICollection<Drivers> Drivers { get; set; }
         public virtual ICollection<Reviews> Reviews { get; set; }
     }

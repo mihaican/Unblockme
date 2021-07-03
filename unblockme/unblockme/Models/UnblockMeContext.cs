@@ -147,6 +147,7 @@ namespace unblockme.Models
                 entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.Color)
+                    .IsRequired()
                     .HasColumnName("color")
                     .HasMaxLength(20);
 
@@ -157,10 +158,12 @@ namespace unblockme.Models
                 entity.Property(e => e.Longitude).HasColumnName("longitude");
 
                 entity.Property(e => e.Make)
+                    .IsRequired()
                     .HasColumnName("make")
                     .HasMaxLength(20);
 
                 entity.Property(e => e.Model)
+                    .IsRequired()
                     .HasColumnName("model")
                     .HasMaxLength(20);
 
@@ -168,14 +171,6 @@ namespace unblockme.Models
                     .IsRequired()
                     .HasColumnName("plate")
                     .HasMaxLength(15);
-
-                entity.Property(e => e.State).HasColumnName("state");
-
-                entity.HasOne(d => d.IdOwnerNavigation)
-                    .WithMany(p => p.Cars)
-                    .HasForeignKey(d => d.IdOwner)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_cars_users");
             });
 
             modelBuilder.Entity<Drivers>(entity =>
@@ -193,11 +188,13 @@ namespace unblockme.Models
                 entity.HasOne(d => d.IdCarNavigation)
                     .WithMany(p => p.Drivers)
                     .HasForeignKey(d => d.IdCar)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_drivers_cars");
 
                 entity.HasOne(d => d.IdUserNavigation)
                     .WithMany(p => p.Drivers)
                     .HasForeignKey(d => d.IdUser)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_drivers_users");
             });
 
@@ -209,7 +206,9 @@ namespace unblockme.Models
                     .HasColumnName("id")
                     .ValueGeneratedNever();
 
-                entity.Property(e => e.Body).HasColumnName("body");
+                entity.Property(e => e.Body)
+                    .IsRequired()
+                    .HasColumnName("body");
 
                 entity.Property(e => e.IdPoster).HasColumnName("id_poster");
 
@@ -220,6 +219,7 @@ namespace unblockme.Models
                 entity.HasOne(d => d.IdRecieverNavigation)
                     .WithMany(p => p.Reviews)
                     .HasForeignKey(d => d.IdReciever)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_reviews_users");
             });
 

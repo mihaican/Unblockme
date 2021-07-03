@@ -20,11 +20,9 @@ namespace unblockme.Models
         public string Color { get; set; }
         public string Make { get; set; }
         public string Model { get; set; }
-        public double? Latitude { get; set; }
-        public double? Longitude { get; set; }
-        public int? State { get; set; }
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
 
-        public virtual Users IdOwnerNavigation { get; set; }
         public virtual ICollection<Drivers> Drivers { get; set; }
     }
 }
