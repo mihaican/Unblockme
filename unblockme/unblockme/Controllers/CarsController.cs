@@ -20,9 +20,16 @@ namespace unblockme.Controllers
         }
 
         // GET: Cars
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString)
         {
-            return View(await _context.Cars.ToListAsync());
+           
+            var car = from i in _context.Cars
+                      select i;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                car = car.Where(s => s.Plate.Contains(searchString));
+            }
+            return View(await car.ToListAsync());
         }
 
         // GET: Cars/Details/5
