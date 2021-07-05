@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 
 // Code scaffolded by EF Core assumes nullable reference types (NRTs) are not used or disabled.
@@ -7,20 +8,17 @@ using System.Collections.Generic;
 
 namespace unblockme.Models
 {
-    public partial class Users
+    public partial class Users2: IdentityUser
     {
-        public Users()
+        public Users2()
         {
             Drivers = new HashSet<Drivers>();
             Reviews = new HashSet<Reviews>();
         }
 
-        public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string Email { get; set; }
-        public string PhoneNumber { get; set; }
-        public string PasswordTeapa { get; set; }
+      
         public double Rating { get; set; }
         public int RatingCount { get; set; }
 

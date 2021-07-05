@@ -1,0 +1,38 @@
+﻿@model IEnumerable<unblockme.Models.intermediara>
+
+    @{
+    ViewData["Title"] = "mycar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    <h1>mycar</h1>
+        <tbody class="intro">
+            @foreach (var item in Model) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdOwner)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Plate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Color)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Make)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Model)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Latitude)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Longitude)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+            </tr>
+            }
+        </tbody>
+    

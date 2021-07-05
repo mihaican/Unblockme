@@ -11,10 +11,10 @@ namespace unblockme.Models
     {
         public int Id { get; set; }
         public int IdPoster { get; set; }
-        public int IdReciever { get; set; }
+        public string IdReciever { get; set; }
         public string Body { get; set; }
         public int Rating { get; set; }
 
-        public virtual Users IdRecieverNavigation { get; set; }
+        public virtual Users2 IdRecieverNavigation { get; set; }
     }
 }

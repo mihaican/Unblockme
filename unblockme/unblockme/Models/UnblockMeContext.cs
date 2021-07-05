@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
@@ -8,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace unblockme.Models
 {
-    public partial class UnblockMeContext : DbContext
+    public partial class UnblockMeContext : IdentityDbContext<Users2>
     {
         public UnblockMeContext()
         {
@@ -19,17 +20,11 @@ namespace unblockme.Models
         {
         }
 
-        public virtual DbSet<AspNetRoleClaims> AspNetRoleClaims { get; set; }
-        public virtual DbSet<AspNetRoles> AspNetRoles { get; set; }
-        public virtual DbSet<AspNetUserClaims> AspNetUserClaims { get; set; }
-        public virtual DbSet<AspNetUserLogins> AspNetUserLogins { get; set; }
-        public virtual DbSet<AspNetUserRoles> AspNetUserRoles { get; set; }
-        public virtual DbSet<AspNetUserTokens> AspNetUserTokens { get; set; }
-        public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
         public virtual DbSet<Cars> Cars { get; set; }
         public virtual DbSet<Drivers> Drivers { get; set; }
         public virtual DbSet<Reviews> Reviews { get; set; }
-        public virtual DbSet<Users> Users { get; set; }
+        public virtual DbSet<Users2> Users { get; set; }
+        
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -42,104 +37,8 @@ namespace unblockme.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<AspNetRoleClaims>(entity =>
-            {
-                entity.HasIndex(e => e.RoleId);
-
-                entity.Property(e => e.RoleId).IsRequired();
-
-                entity.HasOne(d => d.Role)
-                    .WithMany(p => p.AspNetRoleClaims)
-                    .HasForeignKey(d => d.RoleId);
-            });
-
-            modelBuilder.Entity<AspNetRoles>(entity =>
-            {
-                entity.HasIndex(e => e.NormalizedName)
-                    .HasName("RoleNameIndex")
-                    .IsUnique()
-                    .HasFilter("([NormalizedName] IS NOT NULL)");
-
-                entity.Property(e => e.Name).HasMaxLength(256);
-
-                entity.Property(e => e.NormalizedName).HasMaxLength(256);
-            });
-
-            modelBuilder.Entity<AspNetUserClaims>(entity =>
-            {
-                entity.HasIndex(e => e.UserId);
-
-                entity.Property(e => e.UserId).IsRequired();
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.AspNetUserClaims)
-                    .HasForeignKey(d => d.UserId);
-            });
-
-            modelBuilder.Entity<AspNetUserLogins>(entity =>
-            {
-                entity.HasKey(e => new { e.LoginProvider, e.ProviderKey });
-
-                entity.HasIndex(e => e.UserId);
-
-                entity.Property(e => e.LoginProvider).HasMaxLength(128);
-
-                entity.Property(e => e.ProviderKey).HasMaxLength(128);
-
-                entity.Property(e => e.UserId).IsRequired();
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.AspNetUserLogins)
-                    .HasForeignKey(d => d.UserId);
-            });
-
-            modelBuilder.Entity<AspNetUserRoles>(entity =>
-            {
-                entity.HasKey(e => new { e.UserId, e.RoleId });
-
-                entity.HasIndex(e => e.RoleId);
-
-                entity.HasOne(d => d.Role)
-                    .WithMany(p => p.AspNetUserRoles)
-                    .HasForeignKey(d => d.RoleId);
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.AspNetUserRoles)
-                    .HasForeignKey(d => d.UserId);
-            });
-
-            modelBuilder.Entity<AspNetUserTokens>(entity =>
-            {
-                entity.HasKey(e => new { e.UserId, e.LoginProvider, e.Name });
-
-                entity.Property(e => e.LoginProvider).HasMaxLength(128);
-
-                entity.Property(e => e.Name).HasMaxLength(128);
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.AspNetUserTokens)
-                    .HasForeignKey(d => d.UserId);
-            });
-
-            modelBuilder.Entity<AspNetUsers>(entity =>
-            {
-                entity.HasIndex(e => e.NormalizedEmail)
-                    .HasName("EmailIndex");
-
-                entity.HasIndex(e => e.NormalizedUserName)
-                    .HasName("UserNameIndex")
-                    .IsUnique()
-                    .HasFilter("([NormalizedUserName] IS NOT NULL)");
-
-                entity.Property(e => e.Email).HasMaxLength(256);
-
-                entity.Property(e => e.NormalizedEmail).HasMaxLength(256);
-
-                entity.Property(e => e.NormalizedUserName).HasMaxLength(256);
-
-                entity.Property(e => e.UserName).HasMaxLength(256);
-            });
-
+            base.OnModelCreating(modelBuilder);
+            
             modelBuilder.Entity<Cars>(entity =>
             {
                 entity.ToTable("cars");
@@ -195,7 +94,7 @@ namespace unblockme.Models
                     .WithMany(p => p.Drivers)
                     .HasForeignKey(d => d.IdUser)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_drivers_users");
+                    .HasConstraintName("FK_drivers_AspNetUsers");
             });
 
             modelBuilder.Entity<Reviews>(entity =>
@@ -220,44 +119,26 @@ namespace unblockme.Models
                     .WithMany(p => p.Reviews)
                     .HasForeignKey(d => d.IdReciever)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_reviews_users");
+                    .HasConstraintName("FK_reviews_AspNetUsers");
             });
 
-            modelBuilder.Entity<Users>(entity =>
+            modelBuilder.Entity<Users2>(entity =>
             {
-                entity.ToTable("users");
-
-                entity.Property(e => e.Id).HasColumnName("id");
-
-                entity.Property(e => e.Email)
-                    .IsRequired()
-                    .HasColumnName("email")
-                    .HasMaxLength(50);
+                entity.ToTable("AspNetUsers");
 
                 entity.Property(e => e.FirstName)
                     .IsRequired()
-                    .HasColumnName("first_name")
+                    .HasColumnName("FirstName")
                     .HasMaxLength(25);
 
                 entity.Property(e => e.LastName)
                     .IsRequired()
-                    .HasColumnName("last_name")
+                    .HasColumnName("LastName")
                     .HasMaxLength(25);
 
-                entity.Property(e => e.PasswordTeapa)
-                    .IsRequired()
-                    .HasColumnName("password_teapa")
-                    .HasMaxLength(10)
-                    .IsFixedLength();
+                entity.Property(e => e.Rating).HasColumnName("Rating");
 
-                entity.Property(e => e.PhoneNumber)
-                    .IsRequired()
-                    .HasColumnName("phone_number")
-                    .HasMaxLength(11);
-
-                entity.Property(e => e.Rating).HasColumnName("rating");
-
-                entity.Property(e => e.RatingCount).HasColumnName("rating_count");
+                entity.Property(e => e.RatingCount).HasColumnName("RatingCount");
             });
 
             OnModelCreatingPartial(modelBuilder);

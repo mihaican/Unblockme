@@ -5,16 +5,15 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using unblockme.Data;
 using unblockme.Models;
 
 namespace unblockme.Controllers
 {
     public class CarsController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly UnblockMeContext _context;
 
-        public CarsController(ApplicationDbContext context)
+        public CarsController(UnblockMeContext context)
         {
             _context = context;
         }
@@ -29,7 +28,21 @@ namespace unblockme.Controllers
             {
                 car = car.Where(s => s.Plate.Contains(searchString));
             }
-            return View(await car.ToListAsync());
+            return View(car);
+        }
+        public async Task<IActionResult> mycar(string plate)
+        {
+         /*   var sol = new intermediara {};
+            var car = from i in _context.Cars
+                      where i.Plate == "DJ28SAM"
+                      select sol;*/
+            //var sol = new intermediara { };
+            //var car = from i in _context.Cars
+            //          join e in _context.Users2 on i.IdOwner equals e.Id
+            //          where i.Plate == "DJ28SAM"
+            //          select sol;
+           
+            return View(1);
         }
 
         // GET: Cars/Details/5
@@ -40,8 +53,8 @@ namespace unblockme.Controllers
                 return NotFound();
             }
 
-            var cars = await _context.Cars
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var cars = await _context.Cars.ToListAsync();
+             //   .FirstOrDefaultAsync(m => m.Id == id);
             if (cars == null)
             {
                 return NotFound();
@@ -95,10 +108,10 @@ namespace unblockme.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,IdOwner,Plate,Color,Make,Model,Latitude,Longitude")] Cars cars)
         {
-            if (id != cars.Id)
-            {
-                return NotFound();
-            }
+            //if (id != cars.Id)
+            //{
+            //    return NotFound();
+            //}
 
             if (ModelState.IsValid)
             {
@@ -109,14 +122,14 @@ namespace unblockme.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CarsExists(cars.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    //if (!CarsExists(cars.Id))
+                    //{
+                    //    return NotFound();
+                    //}
+                    //else
+                    //{
+                    //    throw;
+                    //}
                 }
                 return RedirectToAction(nameof(Index));
             }
@@ -131,8 +144,8 @@ namespace unblockme.Controllers
                 return NotFound();
             }
 
-            var cars = await _context.Cars
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var cars = await _context.Cars.ToListAsync();
+               // .FirstOrDefaultAsync(m => m.Id == id);
             if (cars == null)
             {
                 return NotFound();
@@ -154,7 +167,7 @@ namespace unblockme.Controllers
 
         private bool CarsExists(int id)
         {
-            return _context.Cars.Any(e => e.Id == id);
+            return true;//_context.Cars.Any(e => e.Id == id);
         }
     }
 }

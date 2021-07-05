@@ -9,11 +9,11 @@ namespace unblockme.Models
 {
     public partial class Drivers
     {
-        public int Id { get; set; }
-        public int IdUser { get; set; }
-        public int IdCar { get; set; }
+        public string Id { get; set; }
+        public string IdUser { get; set; }
+        public string IdCar { get; set; }
 
         public virtual Cars IdCarNavigation { get; set; }
-        public virtual Users IdUserNavigation { get; set; }
+        public virtual Users2 IdUserNavigation { get; set; }
     }
 }
