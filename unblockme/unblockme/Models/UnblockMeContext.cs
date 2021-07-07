@@ -127,12 +127,12 @@ namespace unblockme.Models
                 entity.ToTable("AspNetUsers");
 
                 entity.Property(e => e.FirstName)
-                    .IsRequired()
+                  //  .IsRequired()
                     .HasColumnName("FirstName")
                     .HasMaxLength(25);
 
                 entity.Property(e => e.LastName)
-                    .IsRequired()
+                   // .IsRequired()
                     .HasColumnName("LastName")
                     .HasMaxLength(25);
 

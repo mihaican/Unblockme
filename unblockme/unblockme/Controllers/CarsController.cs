@@ -41,7 +41,7 @@ namespace unblockme.Controllers
            var sol = (from i in _context.Cars
                       join e in _context.Users on i.IdOwner equals e.Id
                       where i.Plate == plate
-                      select new Intermediara {
+                      select new CarDetails{
                           IdOwner = i.IdOwner,
                           Plate = i.Plate,
                           Color = i.Color,
