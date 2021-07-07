@@ -50,7 +50,7 @@ namespace unblockme.Models
                     .HasColumnName("color")
                     .HasMaxLength(20);
 
-                entity.Property(e => e.IdOwner).HasColumnName("id_owner");
+                entity.Property(e => e.IdOwner).HasColumnName("idOwner");
 
                 entity.Property(e => e.Latitude).HasColumnName("latitude");
 

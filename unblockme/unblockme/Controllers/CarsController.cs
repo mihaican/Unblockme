@@ -32,21 +32,32 @@ namespace unblockme.Controllers
         }
         public async Task<IActionResult> mycar(string plate)
         {
-         /*   var sol = new intermediara {};
-            var car = from i in _context.Cars
-                      where i.Plate == "DJ28SAM"
-                      select sol;*/
-            //var sol = new intermediara { };
-            //var car = from i in _context.Cars
-            //          join e in _context.Users2 on i.IdOwner equals e.Id
-            //          where i.Plate == "DJ28SAM"
-            //          select sol;
-           
-            return View(1);
+            //var sol = new intermediara {};
+            //var  car = from i in _context.Cars
+            //           where i.Plate == "DJ28SAM"
+            //           select i;
+            // var sol = new intermediara { };
+
+           var sol = (from i in _context.Cars
+                      join e in _context.Users on i.IdOwner equals e.Id
+                      where i.Plate == plate
+                      select new Intermediara {
+                          IdOwner = i.IdOwner,
+                          Plate = i.Plate,
+                          Color = i.Color,
+                          Make = i.Make,
+                          Model = i.Model,
+                          Latitude = i.Latitude,
+                          Longitude = i.Longitude,
+                          FirstName = e.FirstName,
+                          LastName = e.LastName
+                      });
+
+            return View(sol);
         }
 
         // GET: Cars/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(string? id)
         {
             if (id == null)
             {
@@ -86,7 +97,7 @@ namespace unblockme.Controllers
         }
 
         // GET: Cars/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(string? id)
         {
             if (id == null)
             {
