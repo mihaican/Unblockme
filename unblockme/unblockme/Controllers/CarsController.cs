@@ -55,6 +55,14 @@ namespace unblockme.Controllers
 
             return View(sol);
         }
+        public async Task<IActionResult> mycars(string Id)
+        {
+            var  car = from i in _context.Cars
+                       where i.Id == Id
+                       select i;
+
+               return View(car);
+        }
 
         // GET: Cars/Details/5
         public async Task<IActionResult> Details(string? id)
@@ -77,6 +85,13 @@ namespace unblockme.Controllers
         // GET: Cars/Create
         public IActionResult Create()
         {
+            //var name = User.Identity.Name;
+            //var id = from i in _context.Users
+            //          where name == i.UserName
+            //          //select new string(i.Id);
+            //          select i;
+                      
+            //return View(id);
             return View();
         }
 
@@ -87,8 +102,10 @@ namespace unblockme.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,IdOwner,Plate,Color,Make,Model,Latitude,Longitude")] Cars cars)
         {
-            if (ModelState.IsValid)
+            
+           if (ModelState.IsValid)
             {
+                cars.IdOwner = "9803ecbf-7d94-4613-8fa2-451b35f9bffa";
                 _context.Add(cars);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

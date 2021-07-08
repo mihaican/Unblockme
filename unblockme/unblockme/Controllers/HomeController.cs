@@ -20,7 +20,9 @@ namespace unblockme.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            Users2 ident = new Users2();
+            ident.FirstName = User.Identity.Name;
+            return View(ident);
         }
 
         public IActionResult Privacy()
