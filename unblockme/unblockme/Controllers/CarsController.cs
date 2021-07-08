@@ -86,12 +86,14 @@ namespace unblockme.Controllers
         public IActionResult Create()
         {
             //var name = User.Identity.Name;
-            //var id = from i in _context.Users
-            //          where name == i.UserName
-            //          //select new string(i.Id);
-            //          select i;
-                      
-            //return View(id);
+            //var current_user = from i in _context.Users
+            //         where name == i.UserName
+            //         select i;
+            //string id="";
+            //foreach (var item in current_user)
+            //    id = item.Id;
+            //id = id;
+            
             return View();
         }
 
@@ -102,10 +104,17 @@ namespace unblockme.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,IdOwner,Plate,Color,Make,Model,Latitude,Longitude")] Cars cars)
         {
-            
-           if (ModelState.IsValid)
+            //get id
+            var name = User.Identity.Name;
+            var current_user = from i in _context.Users
+                               where name == i.UserName
+                               select i;
+            string id = "";
+            foreach (var item in current_user)
+                id = item.Id;
+            if (ModelState.IsValid)
             {
-                cars.IdOwner = "9803ecbf-7d94-4613-8fa2-451b35f9bffa";
+                cars.IdOwner = id;
                 _context.Add(cars);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
