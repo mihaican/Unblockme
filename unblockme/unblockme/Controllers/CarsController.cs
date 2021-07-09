@@ -55,12 +55,21 @@ namespace unblockme.Controllers
 
             return View(sol);
         }
-        public async Task<IActionResult> mycars(string Id)
+        public async Task<IActionResult> mycars()
         {
+            //get id
+            var name = User.Identity.Name;
+            var current_user = from i in _context.Users
+                               where name == i.UserName
+                               select i;
+            string id = "";
+            foreach (var item in current_user)
+                id = item.Id;
             var  car = from i in _context.Cars
-                       where i.Id == Id
+                       where i.IdOwner == id
                        select i;
-
+            //var claims = HttpContext.User.Claims;
+            //var aidiu= claims.FirstorDefault(x => x.Type=ClaimTypes.Nameidentifier) guid
                return View(car);
         }
 
@@ -102,7 +111,7 @@ namespace unblockme.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,IdOwner,Plate,Color,Make,Model,Latitude,Longitude")] Cars cars)
+        public async Task<IActionResult> Create( Cars cars)
         {
             //get id
             var name = User.Identity.Name;
