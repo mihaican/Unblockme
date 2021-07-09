@@ -55,7 +55,7 @@ namespace unblockme.Controllers
         }
         public async Task<IActionResult> mycars()
         {
-            //get id
+            //get id remember to change
             var name = User.Identity.Name;
             var current_user = from i in _context.Users
                                where name == i.UserName
@@ -111,7 +111,7 @@ namespace unblockme.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create( Cars cars)
         {
-            //get id
+            //get id remember to change
             var name = User.Identity.Name;
             var current_user = from i in _context.Users
                                where name == i.UserName
