@@ -6,28 +6,26 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using unblockme.Models;
+using unblockme.Services;
 
 namespace unblockme.Controllers
 {
     public class CarsController : Controller
     {
         private readonly UnblockMeContext _context;
+        private readonly ICarsService _carservice;
 
-        public CarsController(UnblockMeContext context)
+        public CarsController(UnblockMeContext context, ICarsService carservice)
         {
             _context = context;
+            _carservice = carservice;
         }
 
         // GET: Cars
         public async Task<IActionResult> Index(string searchString)
         {
-           
-            var car = from i in _context.Cars
-                      select i;
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                car = car.Where(s => s.Plate.Contains(searchString));
-            }
+
+            var car = _carservice.GetCarsByPlate(searchString);
             return View(car);
         }
         public async Task<IActionResult> mycar(string plate)

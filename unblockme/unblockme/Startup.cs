@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using unblockme.Models;
+using unblockme.Services;
 
 namespace unblockme
 {
@@ -34,6 +35,8 @@ namespace unblockme
                 .AddEntityFrameworkStores<UnblockMeContext>();
             services.AddControllersWithViews();
             services.AddRazorPages();
+            services.AddTransient<ICarsService, CarsService>();
+                ;
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
