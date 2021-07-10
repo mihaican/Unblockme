@@ -1,0 +1,32 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = null;
+}
+<script>
+    function authentification() {
+        var obj = document.getElementById("dialogue1");
+        obj.remove();
+        var login = document.createElement("BUTTON");
+        login.innerHTML = "Login";
+        
+        login.addEventListener("click", function () {
+            location.href ='../Identity/Account/Login';
+        });
+        var register = document.createElement("BUTTON");
+        register.innerHTML = "Register";
+        
+        register.addEventListener("click", function () {
+            location.href ='../Identity/Account/Register';
+        });
+        document.body.appendChild(login);
+        document.body.appendChild(register);
+        
+      /* onclick="location.href='../Identity/Account/Login'*/
+    }
+
+
+</script>
+<p style= "font-size:50px ">Stuck in a parking lot?</p>
+<a id="dialogue1" style= "font-size:50px " onclick="authentification();">Lets get started</a>

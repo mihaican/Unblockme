@@ -65,6 +65,7 @@ namespace unblockme
             {
                 endpoints.MapControllerRoute(
                     name: "default",
+                    // it used to be index, maybe i should find a better way to do this
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
