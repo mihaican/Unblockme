@@ -1,39 +1,34 @@
-﻿@model IEnumerable<unblockme.Models.CarDetails>
+﻿@model (IEnumerable<unblockme.Models.CarDetails>, IEnumerable<unblockme.Models.Reviews>)
 
 
-    @{
+@{
     ViewData["Title"] = "mycar";
     Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@*replace with users profile picture*@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<img width="400" height="300" src="" />
+<p style="float:right"> @Model.Item1.First().LastName @Model.Item1.First().FirstName</p>
+@*replace with real status*@
+<p>scuze, te am blocat</p>
+<p>Email: @Model.Item1.First().Email</p>
+<p>Telephone: @Model.Item1.First().PhoneNumber</p>
+<p>Rating:@(Math.Round(Model.Item1.First().Rating/Model.Item1.First().RatingCount))</p>
+<tbody>
+    @foreach (var item in Model.Item2)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdPoster)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Body)
+            </td>
+            <td>
+                @for (var i = 1; i <=item.Rating; i++)
+                {<span class="fa fa-star"></span>}
+                @*@Html.DisplayFor(modelItem => item.Rating)*@
+            </td>
+        </tr>
     }
-    <h1>mycar</h1>
-        <tbody class="intro">
-            @foreach (var item in Model) {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IdOwner)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Plate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Color)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Make)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Model)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Latitude)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Longitude)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FirstName)
-                </td>
-            </tr>
-            }
-        </tbody>
-    
+</tbody>

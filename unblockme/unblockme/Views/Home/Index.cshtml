@@ -6,7 +6,7 @@
 <!-- move this -->
 <form asp-controller="Cars" asp-action="mycar">
     <div class="input-group">
-        <input type="text" name="plate" />
+        <input id="search_box" type="text" name="plate" />
         <input type="submit" class="btn btn-primary " value="search" />
     </div>
 </form>
@@ -15,7 +15,7 @@
 
 
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-    <button type="button" class="btn btn-info" onclick="location.href='cars/index';">Am blocat pe cineva</button>
+    <button type="button" class="btn btn-info" onclick="document.getElementById('search_box').focus()" @*onclick="location.href='cars/index';"*@>Am blocat pe cineva</button>
     <button type="button" class="btn btn-info">Cineva m-a blocat</button>
     @*<p>@Model.FirstName</p>*@
     <p>

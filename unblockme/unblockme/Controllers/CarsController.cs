@@ -48,10 +48,28 @@ namespace unblockme.Controllers
                           Latitude = i.Latitude,
                           Longitude = i.Longitude,
                           FirstName = e.FirstName,
-                          LastName = e.LastName
+                          LastName = e.LastName,
+                          PhoneNumber=e.PhoneNumber,
+                          Email=e.Email,
+                          Rating=e.Rating,
+                          RatingCount=e.RatingCount
                       });
-
-            return View(sol);
+            //get id
+            var name = User.Identity.Name;
+            var current_user = from i in _context.Users
+                               where name == i.UserName
+                               select i;
+            string id = "";
+            //get reviews, this should be a service
+            foreach (var item in current_user)
+                id = item.Id;
+            var reviews = from i in _context.Reviews
+                          where i.IdReciever == id
+                          select i;
+            (IEnumerable<CarDetails>, IEnumerable<Reviews>) data;
+            data.Item1 = sol;
+            data.Item2 = reviews;
+            return View(data);
         }
         public async Task<IActionResult> mycars()
         {
