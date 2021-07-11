@@ -22,6 +22,8 @@ namespace unblockme.Models
         public string Model { get; set; }
         public double Latitude { get; set; }
         public double Longitude { get; set; }
+        public string BlockedBy { get; set; }
+        public string Blocked { get; set; }
 
         public virtual ICollection<Drivers> Drivers { get; set; }
     }

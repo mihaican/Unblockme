@@ -58,6 +58,11 @@ namespace unblockme.Models
 
                 entity.Property(e => e.Longitude).HasColumnName("longitude");
 
+                entity.Property(e => e.Blocked).HasColumnName("BlockedBy");
+
+                entity.Property(e => e.BlockedBy).HasColumnName("Blocked");
+
+                // maybe set some requirements for blocked and blockedby properties
                 entity.Property(e => e.Make)
                     .IsRequired()
                     .HasColumnName("make")

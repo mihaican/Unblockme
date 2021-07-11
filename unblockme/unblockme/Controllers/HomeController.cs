@@ -27,6 +27,10 @@ namespace unblockme.Controllers
                 return RedirectToAction("Welcome", "Home");//Welcome();
 
             return View();
+        } 
+        public IActionResult test_register()
+        {
+            return View();
         }
 
         public IActionResult Privacy()

@@ -55,14 +55,14 @@ namespace unblockme.Controllers
                           RatingCount=e.RatingCount
                       });
             //get id
-            var name = User.Identity.Name;
-            var current_user = from i in _context.Users
-                               where name == i.UserName
+            //var name = User.Identity.Name;
+            var current_user = from i in _context.Cars
+                               where plate == i.Plate
                                select i;
             string id = "";
             //get reviews, this should be a service
             foreach (var item in current_user)
-                id = item.Id;
+                id = item.IdOwner;
             var reviews = from i in _context.Reviews
                           where i.IdReciever == id
                           select i;
@@ -84,6 +84,8 @@ namespace unblockme.Controllers
             var  car = from i in _context.Cars
                        where i.IdOwner == id
                        select i;
+            //car.First().Blocked = car.First().Blocked;
+
             //var claims = HttpContext.User.Claims;
             //var aidiu= claims.FirstorDefault(x => x.Type=ClaimTypes.Nameidentifier) guid
                return View(car);
