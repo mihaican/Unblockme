@@ -3,8 +3,55 @@
 @{
     ViewData["Title"] = "Register";
 }
+<script>
 
+    var current_item = -1;
+    var last_created = '';
+    var order = [
+        'Email',
+        'Password',
+        'ConfirmPassword'//,
+        // 'read_username'
+    ]
+    function previous() {
+        if (current_item > 0) {
+            //  if (last_created != '')
+            //  document.getElementById(last_created).remove();
+            current_item--;
+            read_data(order[current_item]);
+        }
+    }
+    function next() {
+        if (current_item < order.length - 1) {
+            // if (last_created != '')
+            //    document.getElementById(last_created).remove();
+            current_item++;
+            read_data(order[current_item]);
+        }
+    }
+    function read_data(area) {
+        var check = document.getElementById(area);
+        if (check == null || typeof (check) == 'undefined') { // checks if element already exists
+            var obj = document.createElement("input");
+            obj.setAttribute('asp-for', 'Input.' + area);
+            obj.type = 'text', obj.value = area, obj.id = 'Input_' + area;
+            obj.name = 'Input.' + area;
+            last_created = obj.id;
+            document.getElementById('muiales').appendChild(obj);
+        }
+    }
+
+
+</script>
 <h1>@ViewData["Title"]</h1>
+<body>
+    <form id='muiales' asp-route-returnUrl="@Model.ReturnUrl" method="post">
+        <p onclick="read_email()">Register</p>
+        <a onclick="previous()">previous</a>
+        <a onclick="next()">next</a>
+        <button type="submit" class="btn btn-primary">Register</button>
+    </form>
+</body>
 
 <div class="row">
     <div class="col-md-4">
@@ -61,6 +108,7 @@
         </section>
     </div>
 </div>
+
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
