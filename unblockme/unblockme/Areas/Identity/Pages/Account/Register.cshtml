@@ -15,16 +15,16 @@
     ]
     function previous() {
         if (current_item > 0) {
-            //  if (last_created != '')
-            //  document.getElementById(last_created).remove();
+              if (last_created != '')
+                  document.getElementById(last_created).style.display = "none";
             current_item--;
             read_data(order[current_item]);
         }
     }
     function next() {
         if (current_item < order.length - 1) {
-            // if (last_created != '')
-            //    document.getElementById(last_created).remove();
+             if (last_created != '')
+                 document.getElementById(last_created).style.display = "none";
             current_item++;
             read_data(order[current_item]);
         }
@@ -53,7 +53,7 @@
     </form>
 </body>
 
-<div class="row">
+@*<div class="row">
     <div class="col-md-4">
         <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
             <h4>Create a new account.</h4>
@@ -107,7 +107,7 @@
             }
         </section>
     </div>
-</div>
+</div>*@
 
 
 @section Scripts {
