@@ -1,4 +1,4 @@
-﻿using System;
+﻿ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -81,11 +81,9 @@ namespace unblockme.Controllers
             string id = "";
             foreach (var item in current_user)
                 id = item.Id;
-            var  car = from i in _context.Cars
-                       where i.IdOwner == id
-                       select i;
-            //car.First().Blocked = car.First().Blocked;
-
+            var car = from i in _context.Cars
+                      where i.IdOwner == id
+                      select i;
             //var claims = HttpContext.User.Claims;
             //var aidiu= claims.FirstorDefault(x => x.Type=ClaimTypes.Nameidentifier) guid
                return View(car);
@@ -112,18 +110,39 @@ namespace unblockme.Controllers
         // GET: Cars/Create
         public IActionResult Create()
         {
-            //var name = User.Identity.Name;
-            //var current_user = from i in _context.Users
-            //         where name == i.UserName
-            //         select i;
-            //string id="";
-            //foreach (var item in current_user)
-            //    id = item.Id;
-            //id = id;
-            
             return View();
         }
+        public async Task<IActionResult> Blocked()
+        {
+            //get id remember to change
+            // here we get the cars id 
+            var name = User.Identity.Name;
+            var current_user = from i in _context.Users
+                               where name == i.UserName
+                               select i;
+            string id = "";
+            foreach (var item in current_user)
+                id = item.Id;
+            var current_car = from i in _context.Cars
+                              where id == i.IdOwner
+                              select i;
+            id = current_car.FirstOrDefault().Id;
+            
+            if (id == null)
+            {
+                return NotFound();
+            }
 
+            var cars = await _context.Cars.FindAsync(id);
+            if (cars == null)
+            {
+                return NotFound();
+            }
+
+            
+            return View(cars);
+
+        }
         // POST: Cars/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -148,7 +167,38 @@ namespace unblockme.Controllers
             }
             return View(cars);
         }
-
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Blocked(int id, Cars cars)
+        {
+            
+            var blockedCar = from i in _context.Cars
+                              where cars.Blocked == i.Plate
+                              select i;
+            blockedCar.FirstOrDefault().BlockedBy=cars.Plate;
+            _context.Update(blockedCar.FirstOrDefault());
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(cars);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    //if (!CarsExists(cars.Id))
+                    //{
+                    //    return NotFound();
+                    //}
+                    //else
+                    //{
+                    //    throw;
+                    //}
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return View(cars);
+        }
         // GET: Cars/Edit/5
         public async Task<IActionResult> Edit(string? id)
         {

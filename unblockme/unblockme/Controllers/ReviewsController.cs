@@ -73,13 +73,22 @@ namespace unblockme.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,IdPoster,IdReciever,Body,Rating")] Reviews reviews)
+        public async Task<IActionResult> Create(Reviews reviews)
         {
+            //get id remember to change
+            var name = User.Identity.Name;
+            var current_user = from i in _context.Users
+                               where name == i.UserName
+                               select i;
+            string id = "";
+            foreach (var item in current_user)
+                id = item.Id;
             if (ModelState.IsValid)
             {
+                reviews.IdPoster = id;
                 _context.Add(reviews);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(getReviews));
             }
             ViewData["IdReciever"] = new SelectList(_context.Users, "Id", "Id", reviews.IdReciever);
             return View(reviews);

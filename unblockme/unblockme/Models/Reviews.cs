@@ -10,7 +10,7 @@ namespace unblockme.Models
     public partial class Reviews
     {
         public int Id { get; set; }
-        public int IdPoster { get; set; }
+        public string IdPoster { get; set; }
         public string IdReciever { get; set; }
         public string Body { get; set; }
         public int Rating { get; set; }

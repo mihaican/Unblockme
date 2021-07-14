@@ -4,21 +4,33 @@
 @model unblockme.Models.Users2
 <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"> -->
 <!-- move this -->
-<form asp-controller="Cars" asp-action="mycar">
+<script>
+    function blockedSomeone() {
+        var message = document.createElement("p");
+        message.value = 'Who did you block?'
+        //document.appendChild(message);
+        document.getElementById('form').style.display = 'inline';
+        document.getElementById('blocked').style.display = 'none';
+        document.getElementById('beenblocked').style.display = 'none';
+
+    }
+</script>
+<form asp-controller="Cars" asp-action="mycar" style="display:none" id="form">
     <div class="input-group">
         <input id="search_box" type="text" name="plate" />
         <input type="submit" class="btn btn-primary " value="search" />
     </div>
 </form>
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
+    @*<h1 class="display-4">Welcome</h1>*@
 
 
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-    <button type="button" class="btn btn-info" onclick="document.getElementById('search_box').focus()" @*onclick="location.href='cars/index';"*@>Am blocat pe cineva</button>
-    <button type="button" class="btn btn-info">Cineva m-a blocat</button>
+    @*<p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>*@
+    <button type="button" class="btn btn-info" onclick="blockedSomeone()" id="blocked">Am blocat pe cineva</button>
+    <button type="button" class="btn btn-info" id="beenblocked" onclick=" location.href = '../Cars/blocked?id=' ">Cineva m-a blocat </button>
+    <li class="nav-item"><a id="getReviews" asp-controller="Cars" asp-action="Blocked">Reviewurile mele</a></li>
     @*<p>@Model.FirstName</p>*@
-    <p>
-        @this.User.Identity.Name
-    </p>
+    @*<p>
+            @this.User.Identity.Name
+        </p>*@
 </div>
