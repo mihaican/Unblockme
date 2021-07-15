@@ -47,5 +47,16 @@ namespace unblockme.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+        //public IActionResult Upload(byte[] image)
+        //{
+        //    return View(image);
+        //}
+
+        //[HttpPost]
+        //public IActionResult Upload(byte[] image)
+        //{
+        //    string fileName = User.Identity.name + ".jpg";
+        //    string imagePath = "~/Images" + fileName;
+        //}
     }
 }
